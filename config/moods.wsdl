@@ -1,0 +1,50 @@
+<?xml version ='1.0' encoding ='UTF-8' ?>
+<definitions name='Moods'
+    targetNamespace='http://v-curve.com/moods'
+    xmlns:tns=' http://v-curve.com/moods '
+    xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+    xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+    xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+    xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+    xmlns='http://schemas.xmlsoap.org/wsdl/'>
+
+    <message name='SetMoodRequest'>
+        <part name='userKey' type='xsd:string'/>
+        <part name='moodValue' type='xsd:int'/>
+        <part name='moodComment' type='xsd:string'/>
+    </message>
+    <message name='SetMoodResponse'>
+        <part name='returnValue' type='xsd:int'/>
+        <part name='errorString' type='xsd:string'/>
+    </message>
+
+    <portType name='MoodPortType'>
+        <operation name='setMood'>
+            <input message='tns:SetMoodRequest'/>
+            <output message='tns:SetMoodResponse'/>
+        </operation>
+    </portType>
+
+    <binding name='MoodBinding' type='tns:MoodPortType'>
+        <soap:binding style='rpc'
+         transport='http://schemas.xmlsoap.org/soap/http'/>
+        <operation name='setMood'>
+            <soap:operation soapAction='urn:xmethods-delayed-quotes#setMood'/>
+            <input>
+                <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
+                 encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
+            </input>
+            <output>
+                <soap:body use='encoded' namespace='urn:xmethods-delayed-quotes'
+                 encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name='MoodService'>
+        <port name='MoodPort' binding='MoodBinding'>
+            <soap:address
+             location='http://localhost/moods/service/moods-service.php'/>
+        </port>
+    </service>
+</definitions>
