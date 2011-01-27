@@ -2,16 +2,27 @@
 # moods-service.php
 
 # Load dependencies
-# require('../lib/mood.php');
+# require_once('../lib/mood.php');
 
 class MoodService
 {
     function setMood($userKey, $moodValue, $moodComment)
     {
-        return array(0, "success");
+        if (strlen($userKey) == 0) {
+            throw new SoapFault("Server", "Invalid userkey '".$userKey."'");
+        }
+
+        if (!is_bool($moodValue)) {
+            throw new SoapFault("Server", "Invalid mood value '".$moodValue."'");
+        }
+
+        if (strlen($moodComment) > 140) {
+            throw new SoapFault("Server", "Comment exceeds maximum length of 140 characters");
+        }
+
 /*
         $returnValue = addMood($userKey, $moodValue, $moodComment);
-        if ($returnValue['errorCode'] != '')
+        if ($returnValue['errorCode'] != ERROR_NONE)
         {
             throw new SoapFault("Server", $returnValue['errorString']);
         }

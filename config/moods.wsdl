@@ -10,12 +10,10 @@
 
     <message name='SetMoodRequest'>
         <part name='userKey' type='xsd:string'/>
-        <part name='moodValue' type='xsd:int'/>
+        <part name='moodValue' type='xsd:bool'/>
         <part name='moodComment' type='xsd:string'/>
     </message>
     <message name='SetMoodResponse'>
-        <part name='returnValue' type='xsd:int'/>
-        <part name='errorString' type='xsd:string'/>
     </message>
 
     <portType name='MoodPortType'>
